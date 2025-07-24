@@ -1,13 +1,12 @@
-import React from 'react'
-import { EmployeeTable } from '../component/EmployeeTable'
-import { EmployeeForm } from '../component/EmployeeForm'
-
+import React from "react";
+import { EmployeeTable } from "../component/EmployeeTable";
+import { EmployeeForm } from "../component/EmployeeForm";
 
 export const Employee = () => {
   return (
     <>
-    <EmployeeTable></EmployeeTable>
-    <EmployeeForm></EmployeeForm>
+      <EmployeeTable></EmployeeTable>
+      <EmployeeForm></EmployeeForm>
     </>
-  )
-}
+  );
+};

@@ -1,55 +1,64 @@
 import React from "react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const endPoint = "employee";
 
-export const EmployeeForm = () => {
-  const [newEmployee, setNewEmployee] = useState({
+export const EditEmployeeForm = () => {
+
+    const navigate = useNavigate()
+
+  const params = useParams();
+
+  const [editEmployee, setEdit] = useState({
     name: "",
     department: "",
     role: "",
   });
 
+  const formHandler = (event) => {
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+
+    editEmployee[inputName] = inputValue;
+
+    console.log(editEmployee);
+  };
+
   const submitHandler = async (event) => {
     event.preventDefault();
 
-    const url = baseUrl + endPoint;
+    const employee_id = params.employee_id;
+
+    const url = `${baseUrl}${endPoint}/${employee_id}`;
+
+    console.log(url);
+
     const result = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(newEmployee),
+      method: "PUT",
+      body: JSON.stringify(editEmployee),
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
       },
     });
 
     const data = await result.json();
-    console.log(data);
-
-    window.location.reload();
-  };
-
-  const handlerName = (event) => {
-    newEmployee.name = event.target.value;
-  };
-
-  const handlerDepartment = (event) => {
-    newEmployee.department = event.target.value;
-  };
-
-  const handlerRole = (event) => {
-    newEmployee.role = event.target.value;
+    navigate("/employee")
   };
 
   return (
     <>
-      <h1>Employee Form</h1>
+      <h1>Edit Employee</h1>
+
       <main className="container ml-2 mr-2 mb-5">
         <form onSubmit={submitHandler}>
           <div className="mb-3">
             <label className="form-label">Name</label>
             <input
-              onChange={handlerName}
+              name="name"
+              onChange={formHandler}
               type="text"
               className="form-control"
             />
@@ -57,7 +66,8 @@ export const EmployeeForm = () => {
           <div className="mb-3">
             <label className="form-label">Department</label>
             <input
-              onChange={handlerDepartment}
+              name="department"
+              onChange={formHandler}
               type="text"
               className="form-control"
             />
@@ -65,7 +75,8 @@ export const EmployeeForm = () => {
           <div className="mb-3">
             <label className="form-label">Role</label>
             <input
-              onChange={handlerRole}
+              name="role"
+              onChange={formHandler}
               type="text"
               className="form-control"
             />
