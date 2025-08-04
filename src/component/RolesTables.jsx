@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -15,7 +15,7 @@ export const RolesTables = () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log("Fetched tasks:", data); // 👀 Inspect this in your browser console
+      console.log("Fetched tasks:", data); 
       setTasks(data);
     } catch (err) {
       console.error("Failed to fetch tasks:", err);

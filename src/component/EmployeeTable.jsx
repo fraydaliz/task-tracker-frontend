@@ -76,7 +76,7 @@ export const EmployeeTable = () => {
                   className="btn btn-info m-1"
                   onClick={() => roleHandler(item.employee_id)}
                 >
-                  Roles
+                  Tasks
                 </button>
               </td>
             </tr>
