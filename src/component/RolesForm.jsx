@@ -21,13 +21,18 @@ export const RolesForm = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
+
     const url = `${baseUrl}${endPoint}`;
+    const token = localStorage.getItem("token")
 
     try {
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(tasks),
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+           Authorization: token
+         },
+        
       });
 
       if (response.ok) {
@@ -72,7 +77,9 @@ export const RolesForm = () => {
           </select>
         </div>
 
-        <button type="submit" className="btn btn-primary w-100">Save</button>
+        <button type="submit" className="btn btn-primary w-100">
+          Save
+        </button>
       </form>
 
       <button className="btn btn-warning mt-3 w-100" onClick={returnHandler}>

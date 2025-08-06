@@ -5,6 +5,7 @@ import { EmployeeForm } from "../component/EmployeeForm";
 export const Employee = () => {
   return (
     <>
+   
       <EmployeeTable></EmployeeTable>
       <EmployeeForm></EmployeeForm>
     </>

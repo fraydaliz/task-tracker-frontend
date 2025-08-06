@@ -11,8 +11,16 @@ export const EmployeeTable = () => {
   const [employeeData, setEmployeeData] = useState([]);
 
   const getEmployee = async () => {
+    const token = localStorage.getItem("token");
+
     const url = baseUrl + endPoint;
-    const result = await fetch(url);
+    const result = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    });
+
     const data = await result.json();
     setEmployeeData(data);
   };
@@ -23,17 +31,21 @@ export const EmployeeTable = () => {
 
   const handleDelete = async (id) => {
     const url = `${baseUrl}${endPoint}/${id}`;
+    const token = localStorage.getItem("token");
     const result = await fetch(url, {
       method: "DELETE",
+      headers: {
+        Authorization: token,
+      },
     });
 
     const data = await result.json();
-    window.location.reload()
+    window.location.reload();
   };
 
-  const roleHandler = (id)=>{
-     navigate(`/tasks/${id}`);
-  }
+  const roleHandler = (id) => {
+    navigate(`/tasks/${id}`);
+  };
 
   useEffect(() => {
     getEmployee();
@@ -72,7 +84,7 @@ export const EmployeeTable = () => {
                 >
                   Delate
                 </button>
-                  <button
+                <button
                   className="btn btn-info m-1"
                   onClick={() => roleHandler(item.employee_id)}
                 >

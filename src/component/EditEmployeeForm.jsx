@@ -7,8 +7,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 const endPoint = "employee";
 
 export const EditEmployeeForm = () => {
-
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const params = useParams();
 
@@ -19,12 +18,30 @@ export const EditEmployeeForm = () => {
   });
 
   const formHandler = (event) => {
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
+ 
 
-    editEmployee[inputName] = inputValue;
+    const temp = {
+      name: editEmployee.name,
+      department: editEmployee.department,
+      role: editEmployee.role,
+    };
 
-    console.log(editEmployee);
+    temp[event.target.name] = event.target.value;
+
+    setEdit(temp);
+  };
+
+  const getEmployeeById = async () => {
+    const { employee_id } = params;
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const endPoint = "employee";
+    const url = `${baseUrl}${endPoint}/${employee_id}`;
+    const token = localStorage.getItem("token");
+    const result = await fetch(url, {
+      headers: {
+        Authorization: token,
+      },
+    });
   };
 
   const submitHandler = async (event) => {
@@ -34,19 +51,23 @@ export const EditEmployeeForm = () => {
 
     const url = `${baseUrl}${endPoint}/${employee_id}`;
 
-    console.log(url);
+    const token = localStorage.getItem("token");
 
     const result = await fetch(url, {
       method: "PUT",
       body: JSON.stringify(editEmployee),
       headers: {
         "Content-Type": "application/json",
+        authorization: token,
       },
     });
 
     const data = await result.json();
-    navigate("/employee")
+    navigate("/employee");
   };
+   useEffect(() => {
+        getEmployeeById()
+    }, [])
 
   return (
     <>
@@ -61,6 +82,7 @@ export const EditEmployeeForm = () => {
               onChange={formHandler}
               type="text"
               className="form-control"
+              value={editEmployee.name}
             />
           </div>
           <div className="mb-3">
@@ -70,6 +92,7 @@ export const EditEmployeeForm = () => {
               onChange={formHandler}
               type="text"
               className="form-control"
+              value={editEmployee.department}
             />
           </div>
           <div className="mb-3">
@@ -79,6 +102,7 @@ export const EditEmployeeForm = () => {
               onChange={formHandler}
               type="text"
               className="form-control"
+              value={editEmployee.role}
             />
           </div>
           <button className="btn btn-primary">Save</button>

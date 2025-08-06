@@ -2,18 +2,38 @@ import { Employee } from "./pages/Employee";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { EditEmployee } from "./pages/EditEmployee";
 import { Roles } from "./pages/Roles";
+import { useEffect, useState } from "react";
+import { Menu } from "./component/Menu";
 
 function App() {
+  const [isLogIn, setLogIn] = useState(false);
+
+  const validateToken = ()=>{
+    const token = localStorage.getItem("token")
+    if (token){
+      setLogIn(true)
+    }
+  }
+
+  useEffect(()=>{
+validateToken()
+  },[])
+
   return (
     <>
       <BrowserRouter>
+      { isLogIn &&   <Menu/>}
         <Routes>
-          <Route path="/employee" element={<Employee />}></Route>
-          <Route
-            path="/editEmployee/:employee_id"
-            element={<EditEmployee />}
-          ></Route>
-          <Route path="/tasks/:employee_id" element={<Roles />}></Route>
+          <Route path="/" element={<Home auth={setLogIn} />} />
+          {isLogIn && <Route path="/employee" element={<Employee />} />}
+          {isLogIn && (
+            <Route
+              path="/editEmployee/:employee_id"
+              element={<EditEmployee />}
+            />
+          )}
+
+          {isLogIn && <Route path="/tasks/:employee_id" element={<Roles />} />}
         </Routes>
       </BrowserRouter>
     </>

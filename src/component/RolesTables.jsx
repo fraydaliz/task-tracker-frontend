@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -12,10 +12,13 @@ export const RolesTables = () => {
 
   const getTasks = async () => {
     const url = `${baseUrl}${endPoint}/${employee_id}`;
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: { Authorization: token },
+      });
       const data = await response.json();
-      console.log("Fetched tasks:", data); 
+      console.log("Fetched tasks:", data);
       setTasks(data);
     } catch (err) {
       console.error("Failed to fetch tasks:", err);
@@ -24,8 +27,13 @@ export const RolesTables = () => {
 
   const getEmployee = async () => {
     const url = `${baseUrl}${endPoint2}/${employee_id}`;
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          Authorization: token,
+        },
+      });
       const data = await response.json();
       setEmployee(data[0] || {});
     } catch (err) {
@@ -35,8 +43,12 @@ export const RolesTables = () => {
 
   const deleteTask = async (id) => {
     const url = `${baseUrl}${endPoint}/${id}`;
+    const token = localStorage.getItem("token");
     try {
-      const response = await fetch(url, { method: "DELETE" });
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: { Authorization: token },
+      });
       if (response.ok) {
         setTasks((prev) => prev.filter((task) => task.task_id !== id));
       } else {
@@ -91,5 +103,3 @@ export const RolesTables = () => {
     </table>
   );
 };
-
-
