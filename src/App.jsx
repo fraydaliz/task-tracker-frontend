@@ -4,6 +4,7 @@ import { EditEmployee } from "./pages/EditEmployee";
 import { Roles } from "./pages/Roles";
 import { useEffect, useState } from "react";
 import { Menu } from "./component/Menu";
+import { Home } from "./pages/Home";
 
 function App() {
   const [isLogIn, setLogIn] = useState(false);

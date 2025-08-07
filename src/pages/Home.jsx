@@ -38,7 +38,7 @@ export const Home = ({auth }) => {
     });
 
     if (result.ok) {
-      const data = await result.json;
+      const data = await result.json();
       localStorage.setItem("token", data.token);
       auth(true
 
