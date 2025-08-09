@@ -12,7 +12,7 @@ export const RegisterEmployee = () => {
   const navigate = useNavigate()
 
   const baseUrl = import.meta.env.VITE_BASE_URL 
-  const endPoint = 'tbl_users'
+  const endPoint = 'user'
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
