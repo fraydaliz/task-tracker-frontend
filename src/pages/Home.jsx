@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Home = ({auth }) => {
+export const Home = ({ auth }) => {
   const navigate = useNavigate();
 
   const [resultLogIn, setResultLogin] = useState("");
@@ -40,17 +40,11 @@ export const Home = ({auth }) => {
     if (result.ok) {
       const data = await result.json();
       localStorage.setItem("token", data.token);
-      auth(true
-
-        
-      )
+      auth(true);
       navigate("/employee");
-    }else{
-      setResultLogin('Invalid Credential')
+    } else {
+      setResultLogin("Invalid Credential");
     }
-
-
-
   };
 
   return (
@@ -81,7 +75,12 @@ export const Home = ({auth }) => {
             <button className="btn btn-primary w-100"> Log In</button>
           </form>
 
-          <button className="btn btn-secondary mt-2 w-100"> Register</button>
+          <button
+            className="btn btn-secondary mt-2 w-100"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </button>
         </div>
       </div>
     </>
