@@ -25,7 +25,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {isLogIn && <Menu />}
+       {isLogIn && <Menu auth={setLogIn} />}
+
         <Routes>
           <Route
             path="/register"
